@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#000000" />
-  <meta name="description" content="PIXEL — a pixel-born community. Minimal. Fast. Together." />
+  <meta name="description" content="PIXEL — Born from the grid. Built by the community." />
   <title>PIXEL</title>
 
   <style>
@@ -12,46 +12,56 @@
       --bg:#050507;
       --panel:#0b0b10;
       --text:#ffffff;
-      --muted:#a3a3b2;
+      --muted:#b6b6c6;
       --line:#1b1b24;
       --glow: 0 0 18px rgba(255,255,255,.08);
-      --radius: 18px;
+      --radius: 20px;
+      --accent:#ffffff;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      background: radial-gradient(800px 500px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
-                  radial-gradient(900px 600px at 10% 30%, rgba(255,255,255,.06), transparent 55%),
-                  var(--bg);
+      background:
+        radial-gradient(900px 520px at 50% -10%, rgba(255,255,255,.10), transparent 60%),
+        radial-gradient(900px 600px at 10% 35%, rgba(255,255,255,.06), transparent 58%),
+        radial-gradient(900px 600px at 90% 55%, rgba(255,255,255,.05), transparent 55%),
+        var(--bg);
       color:var(--text);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-      line-height:1.5;
+      line-height:1.55;
       overflow-x:hidden;
     }
+
+    /* Pixel grid overlay */
     .grid{
       position:fixed; inset:0;
       background-image:
-        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 28px 28px;
-      opacity:.18;
+        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity:.16;
       pointer-events:none;
-      mask-image: radial-gradient(closest-side at 50% 20%, rgba(0,0,0,1), rgba(0,0,0,0));
+      mask-image: radial-gradient(closest-side at 50% 18%, rgba(0,0,0,1), rgba(0,0,0,0));
     }
+
     .wrap{
-      max-width:980px;
-      margin:0 auto;
-      padding:28px 18px 60px;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px 16px 70px;
       position:relative;
     }
+
+    /* Top nav */
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:14px;
-      padding:10px 8px;
+      padding:10px 6px;
     }
+
     .brand{
       display:flex;
       align-items:center;
@@ -59,22 +69,31 @@
       text-decoration:none;
       color:var(--text);
     }
-    .logo{
-      width:34px; height:34px;
-      border-radius:10px;
-      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+
+    .brandMark{
+      width:38px; height:38px;
+      border-radius:12px;
       border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
       box-shadow: var(--glow);
-      display:grid; place-items:center;
-      font-weight:800;
-      letter-spacing:.06em;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
     }
-    .brand span{
-      font-weight:800;
+    .brandMark img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      image-rendering: pixelated;
+    }
+    .brandText{
+      font-weight:900;
       letter-spacing:.22em;
-      font-size:14px;
+      font-size:13px;
+      text-transform:uppercase;
       opacity:.95;
     }
+
     .nav{
       display:flex;
       gap:10px;
@@ -94,48 +113,94 @@
       border-color:var(--line);
       background: rgba(255,255,255,.03);
     }
+
+    /* Hero */
     .hero{
-      margin-top:18px;
-      padding:54px 18px;
+      margin-top:14px;
+      padding: 46px 18px 34px;
       border:1px solid var(--line);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
       border-radius: var(--radius);
       box-shadow: var(--glow);
       position:relative;
       overflow:hidden;
+      text-align:center;
     }
     .hero::after{
       content:"";
       position:absolute;
       inset:-2px;
-      background: radial-gradient(520px 220px at 50% 20%, rgba(255,255,255,.12), transparent 60%);
+      background: radial-gradient(560px 240px at 50% 20%, rgba(255,255,255,.13), transparent 60%);
       pointer-events:none;
     }
+
     .kicker{
+      margin:0 0 10px;
       color:var(--muted);
       font-size:12px;
       letter-spacing:.22em;
       text-transform:uppercase;
-      margin:0 0 10px;
+      position:relative;
+      z-index:2;
     }
+
+    .heroLogo{
+      width: 160px;
+      height: 160px;
+      margin: 16px auto 18px;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 14px 50px rgba(0,0,0,.45), var(--glow);
+      overflow:hidden;
+      position:relative;
+      z-index:2;
+      transform-origin: 50% 70%;
+      animation: wobble 3.2s ease-in-out infinite;
+    }
+
+    /* Dezent “wackeln” (nicht kitschig) */
+    @keyframes wobble{
+      0%   { transform: rotate(-1.2deg) translateY(0); }
+      25%  { transform: rotate(1.4deg) translateY(-1px); }
+      50%  { transform: rotate(-1.0deg) translateY(0); }
+      75%  { transform: rotate(1.0deg) translateY(1px); }
+      100% { transform: rotate(-1.2deg) translateY(0); }
+    }
+
+    .heroLogo img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      image-rendering: pixelated;
+    }
+
     h1{
       margin:0;
-      font-size: clamp(38px, 6vw, 64px);
-      letter-spacing:.18em;
+      font-size: clamp(46px, 6.4vw, 78px);
+      letter-spacing:.22em;
       text-transform:uppercase;
+      position:relative;
+      z-index:2;
+      text-shadow: 0 0 16px rgba(255,255,255,.10);
     }
+
     .tagline{
-      max-width: 60ch;
-      margin:14px auto 0;
+      max-width: 70ch;
+      margin: 14px auto 0;
       color:var(--muted);
-      font-size: clamp(15px, 2.4vw, 18px);
+      font-size: clamp(15px, 2.2vw, 18px);
+      position:relative;
+      z-index:2;
     }
+
+    /* Buttons */
     .cta{
       display:flex;
       gap:12px;
       justify-content:center;
       flex-wrap:wrap;
-      margin-top:28px;
+      margin-top: 22px;
       position:relative;
       z-index:2;
     }
@@ -147,7 +212,7 @@
       padding:12px 16px;
       border-radius: 14px;
       text-decoration:none;
-      font-weight:700;
+      font-weight:800;
       font-size:14px;
       letter-spacing:.04em;
       display:inline-flex;
@@ -163,33 +228,32 @@
       box-shadow: 0 10px 28px rgba(255,255,255,.10);
     }
     .btn.primary:hover{ opacity:.92; }
-    .pillrow{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
-      margin-top:18px;
-      position:relative;
-      z-index:2;
-    }
-    .pill{
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color:var(--muted);
-      padding:8px 10px;
+
+    .coin{
+      width:22px; height:22px;
       border-radius: 999px;
+      background: rgba(0,0,0,.86);
+      border:1px solid rgba(255,255,255,.65);
+      display:grid;
+      place-items:center;
+      font-weight:900;
       font-size:12px;
       letter-spacing:.02em;
+      color:#fff;
+      flex: 0 0 auto;
     }
+
+    /* Sections */
     .sections{
-      margin-top:18px;
+      margin-top:14px;
       display:grid;
       grid-template-columns: 1fr;
       gap:14px;
     }
-    @media(min-width: 860px){
-      .sections{ grid-template-columns: 1.2fr .8fr; }
+    @media(min-width: 900px){
+      .sections{ grid-template-columns: 1.1fr .9fr; }
     }
+
     .card{
       border:1px solid var(--line);
       background: rgba(255,255,255,.02);
@@ -198,14 +262,18 @@
       box-shadow: var(--glow);
     }
     .card h2{
-      margin:0 0 8px;
-      font-size:16px;
-      letter-spacing:.14em;
+      margin:0 0 10px;
+      font-size:15px;
+      letter-spacing:.18em;
       text-transform:uppercase;
     }
-    .card p{ margin:0; color:var(--muted); }
+    .card p{
+      margin:0;
+      color:var(--muted);
+    }
+
     .list{
-      margin:12px 0 0;
+      margin:14px 0 0;
       padding:0;
       list-style:none;
       display:grid;
@@ -219,6 +287,8 @@
       color:var(--muted);
     }
     .list b{ color:var(--text); }
+
+    /* Links */
     .links{
       display:grid;
       grid-template-columns: 1fr;
@@ -239,6 +309,7 @@
     }
     .link span{ color:var(--muted); font-size:12px; }
     .link:hover{ background: rgba(255,255,255,.05); }
+
     .footer{
       margin-top:18px;
       padding:18px 6px 0;
@@ -248,17 +319,12 @@
     }
     .footer a{ color:var(--muted); }
     .footer a:hover{ color:var(--text); }
-    .coin{
-      width:22px; height:22px;
-      border-radius: 999px;
-      background: rgba(0,0,0,.86);
-      border:1px solid rgba(255,255,255,.65);
-      display:grid;
-      place-items:center;
-      font-weight:900;
+
+    /* Small helper */
+    .tiny{
       font-size:12px;
-      letter-spacing:.02em;
-      color:#fff;
+      color:var(--muted);
+      margin-top:10px;
     }
   </style>
 </head>
@@ -269,23 +335,35 @@
   <div class="wrap">
     <div class="topbar">
       <a class="brand" href="#top" aria-label="PIXEL home">
-        <div class="logo">P</div>
-        <span>PIXEL</span>
+        <div class="brandMark">
+          <img src="image%20(12).jpg" alt="PIXEL logo">
+        </div>
+        <div class="brandText">PIXEL</div>
       </a>
 
       <div class="nav">
-        <a href="#about">About</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="#story">Story</a>
+        <a href="#community">Community</a>
+        <a href="#treasury">Treasury</a>
         <a href="#links">Links</a>
       </div>
     </div>
 
     <section class="hero" id="top">
       <p class="kicker">Minimal • Meme • Community</p>
+
+      <div class="heroLogo" aria-label="PIXEL logo (animated)">
+        <img src="image%20(12).jpg" alt="PIXEL logo">
+      </div>
+
       <h1>PIXEL</h1>
+
+      <!-- STORY (ENGLISH as requested) -->
       <p class="tagline">
-        A pixel-born community project. Clean branding, consistent drops, transparent updates.
-        No noise — just momentum.
+        Pixel — fresh from cruising the cosmos — spotted our blue planet mid-odyssey.
+        Crypto? Blockchain? Never heard of it… but now he’s hooked.
+        Pixel’s on a mission and needs a crew. Who’s gonna show him what really sends it to the moon?
+        Join up, and let’s discover crypto with Pixel — from zero to the moon.
       </p>
 
       <div class="cta">
@@ -296,47 +374,64 @@
           Follow on X
         </a>
         <a class="btn" href="#links">
-          View Links
+          All Links
         </a>
       </div>
 
-      <div class="pillrow">
-        <div class="pill">Community-first</div>
-        <div class="pill">Minimal design</div>
-        <div class="pill">Daily content</div>
-        <div class="pill">Transparent growth</div>
+      <div class="tiny">
+        Built by the community. Pixel learns — the crew decides the path.
       </div>
     </section>
 
     <div class="sections">
-      <section class="card" id="about">
-        <h2>About</h2>
+      <section class="card" id="story">
+        <h2>Story</h2>
         <p>
-          PIXEL is built around one simple idea: strong community + clean execution.
-          We keep it minimal, move fast, and grow through consistent content and clear communication.
+          Pixel didn’t land here with a masterplan — he landed here with questions.
+          He doesn’t know our world, our rules, or why people obsess over charts.
+          That’s the point: this is a live journey. The community becomes Pixel’s compass.
         </p>
 
         <ul class="list">
-          <li><b>Brand:</b> consistent visuals, same vibe, recognizable everywhere.</li>
-          <li><b>Community:</b> Telegram first, everyone is part of the story.</li>
-          <li><b>Execution:</b> updates over hype. Step by step.</li>
+          <li><b>New world:</b> Pixel knows nothing about crypto — pure curiosity.</li>
+          <li><b>New crew:</b> the community teaches, votes, builds the vibe.</li>
+          <li><b>New route:</b> we choose the path together, step by step.</li>
         </ul>
       </section>
 
-      <section class="card" id="roadmap">
-        <h2>Roadmap</h2>
-        <ul class="list">
-          <li><b>Phase 1:</b> Launch socials • core memes • first community push</li>
-          <li><b>Phase 2:</b> Stickers / templates • collabs • daily posts rhythm</li>
-          <li><b>Phase 3:</b> Expand narrative • tools/utility (only if real) • scale</li>
-        </ul>
-
-        <p style="margin-top:12px;">
-          <span style="color:#fff;font-weight:700;">Rule:</span>
-          We only announce what we can deliver.
+      <section class="card" id="community">
+        <h2>Community-Driven</h2>
+        <p>
+          From day one, the crew decides where Pixel goes next.
+          Narrative, moves, and future actions are guided by the community — not top-down orders.
         </p>
+
+        <ul class="list">
+          <li><b>Direction:</b> the community picks the route Pixel takes.</li>
+          <li><b>Decisions:</b> ideas get tested in public, then executed.</li>
+          <li><b>Culture:</b> memes are the engine — consistency is the fuel.</li>
+        </ul>
       </section>
     </div>
+
+    <section class="card" id="treasury" style="margin-top:14px;">
+      <h2>Treasury</h2>
+      <p>
+        Pixel is building with a team wallet and a community-guided treasury.
+        Later on, the community can steer actions like buybacks and other initiatives —
+        only when it makes sense and only with clear communication.
+      </p>
+
+      <ul class="list">
+        <li><b>Team Wallet:</b> operations + building.</li>
+        <li><b>Treasury:</b> community-guided support for growth.</li>
+        <li><b>Future actions:</b> buybacks and more — decided together.</li>
+      </ul>
+
+      <div class="tiny">
+        Note: we keep it simple and transparent. We announce only what we can deliver.
+      </div>
+    </section>
 
     <section class="card" id="links" style="margin-top:14px;">
       <h2>Links</h2>
@@ -352,11 +447,10 @@
         <a class="link" href="mailto:pixel.unity@proton.me">
           Email <span>pixel.unity@proton.me</span>
         </a>
-        <a class="link" href="#" onclick="alert('Add your Pump.fun / DEX link here'); return false;">
+
+        <!-- Optional: add your Pump.fun / chart later -->
+        <a class="link" href="#" onclick="alert('Add your Pump.fun / Chart link here later.'); return false;">
           Pump.fun / Chart <span>(add link)</span>
-        </a>
-        <a class="link" href="#" onclick="alert('Add your Discord invite here'); return false;">
-          Discord <span>(add invite)</span>
         </a>
       </div>
     </section>
