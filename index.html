@@ -1,259 +1,613 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PIXEL</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Optional favicon if you have logo.png in repo -->
+  <link rel="icon" href="logo.png" />
 
-<title>PIXEL</title>
+  <style>
+    :root{
+      --bg0:#06090d;
+      --bg1:#0a0f16;
+      --card:#0b1118cc;
+      --stroke:rgba(255,255,255,.08);
+      --stroke2:rgba(255,255,255,.12);
+      --text:rgba(255,255,255,.92);
+      --muted:rgba(255,255,255,.68);
+      --muted2:rgba(255,255,255,.52);
+      --green:#62ffb8;
+      --blue:#4a7dff;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --r:26px;
+    }
 
-<style>
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(900px 700px at 20% 10%, rgba(98,255,184,.10), transparent 55%),
+        radial-gradient(900px 700px at 80% 20%, rgba(74,125,255,.10), transparent 55%),
+        radial-gradient(1200px 900px at 50% 110%, rgba(255,255,255,.05), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+      overflow-x:hidden;
+    }
 
-body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#070A0F;
-color:white;
-}
+    /* subtle moving noise overlay */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      mix-blend-mode:soft-light;
+      opacity:.10;
+      animation: drift 12s linear infinite;
+    }
+    @keyframes drift{
+      0%{ transform:translate3d(0,0,0); }
+      100%{ transform:translate3d(-60px,30px,0); }
+    }
 
-.container{
-max-width:1000px;
-margin:auto;
-padding:20px;
-}
+    .wrap{
+      width:min(980px, 92vw);
+      margin: 28px auto 72px;
+    }
 
-.hero{
-background:#0f141c;
-border-radius:20px;
-padding:30px;
-margin-bottom:20px;
-}
+    /* NAV */
+    .nav{
+      position:sticky;
+      top:14px;
+      z-index:20;
+      margin: 12px auto 22px;
+      display:flex;
+      justify-content:center;
+    }
+    .navPill{
+      width:min(860px, 92vw);
+      background: rgba(10,15,22,.55);
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      border-radius: 999px;
+      padding: 10px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: var(--green);
+      box-shadow: 0 0 18px rgba(98,255,184,.55);
+      margin-left:6px;
+      flex:0 0 auto;
+    }
+    .navLinks{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      scrollbar-width:none;
+      -ms-overflow-style:none;
+    }
+    .navLinks::-webkit-scrollbar{ display:none; }
 
-.title{
-font-size:60px;
-letter-spacing:10px;
-}
+    .nav a{
+      text-decoration:none;
+      color:var(--muted);
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      white-space:nowrap;
+      transition:.18s ease;
+      font-weight:600;
+      letter-spacing:.2px;
+      font-size:14px;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:var(--stroke);
+      background:rgba(255,255,255,.04);
+    }
+    .nav a.active{
+      color:var(--text);
+      border-color:var(--stroke2);
+      background:rgba(255,255,255,.06);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+    }
 
-.text{
-color:#b8c1d1;
-line-height:1.6;
-margin-bottom:20px;
-}
+    /* Cards */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid var(--stroke);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 26px;
+    }
 
-.btn{
-display:block;
-width:100%;
-padding:16px;
-margin-top:12px;
-border-radius:30px;
-text-align:center;
-font-weight:bold;
-text-decoration:none;
-}
+    .hero{
+      padding: 28px;
+    }
 
-.telegram{
-background:linear-gradient(90deg,#63ffa6,#2a7cff);
-color:white;
-}
+    .title{
+      font-size: 56px;
+      letter-spacing: .18em;
+      font-weight: 800;
+      margin: 4px 0 10px;
+      line-height: 1;
+      text-transform: uppercase;
+      text-shadow: 0 0 28px rgba(255,255,255,.08);
+    }
+    .lead{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.55;
+      max-width: 62ch;
+    }
+    .lead b{ color: var(--text); font-weight: 800; }
 
-.x{
-background:linear-gradient(90deg,#2a7cff,#1a3dff);
-color:white;
-}
+    .btnRow{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin: 16px 0 16px;
+    }
 
-.contract{
-background:#0b0f14;
-border:1px solid #1e2530;
-color:white;
-}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 16px 22px;
+      min-width: 220px;
+      border-radius: 999px;
+      border:1px solid transparent;
+      font-weight: 800;
+      letter-spacing:.2px;
+      cursor:pointer;
+      text-decoration:none;
+      user-select:none;
+      transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+    }
+    .btn:active{ transform: translateY(1px); }
 
-.tags{
-margin-top:20px;
-}
+    .btnPrimary{
+      color:#07110c;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      box-shadow: 0 14px 40px rgba(74,125,255,.18), 0 14px 40px rgba(98,255,184,.14);
+    }
+    .btnPrimary:hover{ filter: brightness(1.02); }
 
-.tag{
-display:inline-block;
-border:1px solid #2b3440;
-padding:8px 14px;
-border-radius:20px;
-margin:6px;
-color:#b8c1d1;
-}
+    .btnSecondary{
+      color: var(--text);
+      background: rgba(74,125,255,.14);
+      border-color: rgba(74,125,255,.35);
+    }
+    .btnSecondary:hover{ filter: brightness(1.03); }
 
-.status{
-background:#0f141c;
-border-radius:20px;
-padding:25px;
-margin-bottom:20px;
-}
+    .btnGhost{
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+      border-color: var(--stroke);
+      opacity:.95;
+    }
+    .btnGhost:hover{ filter: brightness(1.05); }
 
-.statusRow{
-display:flex;
-justify-content:space-between;
-padding:12px 0;
-border-bottom:1px solid #1f2630;
-}
+    .chips{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .chip{
+      padding: 10px 14px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-weight:700;
+      font-size: 14px;
+    }
 
-.progress{
-height:10px;
-background:#10151c;
-border-radius:20px;
-margin-top:15px;
-}
+    .stack{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      margin-top: 18px;
+    }
 
-.bar{
-height:10px;
-width:65%;
-border-radius:20px;
-background:linear-gradient(90deg,#63ffa6,#2a7cff);
-}
+    /* Character card (smaller + above status) */
+    .characterWrap{
+      padding: 18px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .characterFrame{
+      width: min(420px, 100%);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.28);
+      padding: 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .characterFrame:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(500px 220px at 30% 10%, rgba(98,255,184,.10), transparent 60%),
+        radial-gradient(500px 220px at 70% 90%, rgba(74,125,255,.10), transparent 60%);
+      pointer-events:none;
+      opacity:.8;
+    }
+    .characterFrame img{
+      position:relative;
+      display:block;
+      width: 100%;
+      height:auto;
+      max-height: 420px;
+      object-fit:contain;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 18px 35px rgba(0,0,0,.55));
+      /* small floating */
+      animation: floaty 3.5s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-8px); }
+    }
 
-.character{
-background:#0f141c;
-border-radius:20px;
-padding:30px;
-text-align:center;
-margin-top:-10px;
-}
+    /* Status */
+    .h2{
+      font-size: 18px;
+      letter-spacing: .14em;
+      font-weight: 900;
+      margin: 0 0 14px;
+      text-transform: uppercase;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .live{
+      font-size: 13px;
+      letter-spacing:.18em;
+      font-weight:900;
+      color: rgba(255,255,255,.75);
+    }
+    .statusRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      margin-bottom: 10px;
+      color: var(--muted);
+      font-weight:700;
+    }
+    .statusRow span:last-child{
+      color: var(--text);
+      font-weight:900;
+    }
 
-.character img{
-width:100%;
-max-width:360px;
-display:block;
-margin:auto;
-image-rendering:pixelated;
-}
+    /* SCAN BAR (animated) */
+    .progress{
+      position:relative;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      overflow:hidden;
+      margin: 14px 0 10px;
+    }
+    .bar{
+      position:absolute;
+      inset:0;
+      width: 55%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green), var(--blue));
+      box-shadow: 0 0 22px rgba(98,255,184,.20), 0 0 22px rgba(74,125,255,.18);
+      animation: scanWidth 2.2s ease-in-out infinite;
+    }
+    /* moving scan sheen */
+    .progress:after{
+      content:"";
+      position:absolute;
+      top:-40px; left:-40%;
+      width: 45%;
+      height: 120px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent);
+      transform: rotate(12deg);
+      animation: scanSheen 1.25s linear infinite;
+      pointer-events:none;
+      opacity:.8;
+    }
+    @keyframes scanWidth{
+      0%{ transform: translateX(-8%); width: 44%; }
+      50%{ transform: translateX(42%); width: 62%; }
+      100%{ transform: translateX(-8%); width: 44%; }
+    }
+    @keyframes scanSheen{
+      0%{ left:-55%; }
+      100%{ left:110%; }
+    }
 
-.section{
-background:#0f141c;
-border-radius:20px;
-padding:25px;
-margin-top:20px;
-}
+    .sub{
+      color: var(--muted2);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      letter-spacing:.02em;
+      margin-top: 6px;
+    }
 
-.section h2{
-letter-spacing:4px;
-}
+    /* Sections */
+    section{
+      scroll-margin-top: 92px;
+    }
 
-</style>
+    .sectionTitle{
+      font-size: 22px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin: 0 0 10px;
+    }
+    .p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    ul{
+      margin: 12px 0 0 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+    li b{ color: var(--text); }
+
+    .linksGrid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .linkItem{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 14px;
+      border-radius: 16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+    }
+    .linkItem .k{
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing:.04em;
+    }
+    .linkItem a{
+      color: var(--text);
+      font-weight: 900;
+      text-decoration:none;
+      border-bottom: 1px dashed rgba(255,255,255,.25);
+      padding-bottom: 2px;
+    }
+    .linkItem a:hover{
+      border-bottom-color: rgba(255,255,255,.55);
+    }
+
+    .footNote{
+      margin-top: 22px;
+      color: rgba(255,255,255,.42);
+      font-size: 12.5px;
+      line-height: 1.5;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    /* Desktop layout: hero left + status/character stack right */
+    @media (min-width: 920px){
+      .gridTop{
+        display:grid;
+        grid-template-columns: 1.25fr .95fr;
+        gap: 18px;
+        align-items:start;
+      }
+      .stack{
+        margin-top: 0;
+      }
+      .btn{ min-width: 200px; }
+    }
+
+    @media (max-width: 520px){
+      .title{ font-size: 46px; letter-spacing:.16em; }
+      .btn{ width:100%; min-width: unset; }
+      .hero{ padding: 24px; }
+      .card{ padding: 22px; }
+      .characterFrame img{ max-height: 360px; }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="nav">
+    <div class="navPill">
+      <div class="dot" aria-hidden="true"></div>
+      <div class="navLinks" id="navLinks">
+        <a class="active" href="#top">PIXEL</a>
+        <a href="#story">Story</a>
+        <a href="#treasury">Treasury</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#links">Links</a>
+      </div>
+    </div>
+  </div>
 
-<div class="container">
+  <main class="wrap" id="top">
+    <div class="gridTop">
+      <!-- HERO -->
+      <div class="card hero">
+        <div class="title">PIXEL</div>
 
-<div class="hero">
+        <p class="lead">
+          Pixel — fresh from cruising the cosmos. Crypto? Blockchain? Never heard of it...
+          but now he's hooked. Pixel landed on Earth and is curious. The mission is simple:
+          <b>find community</b>.
+        </p>
 
-<div class="title">PIXEL</div>
+        <div class="btnRow">
+          <a class="btn btnPrimary" href="https://t.me/piXel1Community" target="_blank" rel="noopener noreferrer">
+            Join Telegram
+          </a>
+          <a class="btn btnSecondary" href="https://x.com/_pi_X_eL_" target="_blank" rel="noopener noreferrer">
+            Follow on X
+          </a>
+          <a class="btn btnGhost" href="#links">
+            Contract (coming)
+          </a>
+        </div>
 
-<div class="text">
-Pixel — fresh from cruising the cosmos. Crypto? Blockchain? Never heard of it… but now he’s hooked. Pixel landed on Earth and is curious. The mission is simple: <b>find community.</b>
-</div>
+        <div class="chips">
+          <span class="chip">Minimal</span>
+          <span class="chip">Meme</span>
+          <span class="chip">Community-first</span>
+          <span class="chip">Transparent updates</span>
+        </div>
+      </div>
 
-<a class="btn telegram" href="https://t.me/piXel1Community" target="_blank">
-Join Telegram
-</a>
+      <!-- RIGHT STACK: Character ABOVE Status -->
+      <div class="stack">
+        <!-- CHARACTER (smaller + above status) -->
+        <div class="card characterWrap">
+          <div class="characterFrame">
+            <!-- IMPORTANT: your repo has "charakter.png" (German spelling). Keep this exact. -->
+            <img src="charakter.png" alt="Pixel character" />
+          </div>
+        </div>
 
-<a class="btn x" href="https://x.com/_pi_X_eL_" target="_blank">
-Follow on X
-</a>
+        <!-- STATUS -->
+        <div id="status" class="card">
+          <div class="h2">
+            <span>PIXEL STATUS</span>
+            <span class="live">LIVE</span>
+          </div>
 
-<a class="btn contract">
-Contract (coming)
-</a>
+          <div class="statusRow"><span>Location</span><span>Earth</span></div>
+          <div class="statusRow"><span>Mood</span><span>Curious</span></div>
+          <div class="statusRow"><span>Mission</span><span>Find community</span></div>
 
-<div class="tags">
+          <!-- animated scan -->
+          <div class="progress" aria-label="scan progress">
+            <div class="bar"></div>
+          </div>
 
-<span class="tag">Minimal</span>
-<span class="tag">Meme</span>
-<span class="tag">Community-first</span>
-<span class="tag">Transparent updates</span>
+          <div class="sub">Signal: active • Scan: running • Mode: community</div>
+        </div>
+      </div>
+    </div>
 
-</div>
+    <!-- STORY -->
+    <section id="story" class="card" style="margin-top:18px;">
+      <div class="sectionTitle">STORY</div>
+      <p class="p">
+        Pixel didn’t land here with a masterplan — he landed here with questions.
+        No hype. No fake promises. Just curiosity and a mission to build something with real people.
+      </p>
+      <ul>
+        <li><b>New world:</b> Pixel learns what crypto even is.</li>
+        <li><b>New crew:</b> the community shapes the vibe.</li>
+        <li><b>New route:</b> we decide the next steps together.</li>
+      </ul>
+    </section>
 
-</div>
+    <!-- TREASURY -->
+    <section id="treasury" class="card" style="margin-top:18px;">
+      <div class="sectionTitle">COMMUNITY TREASURY</div>
+      <p class="p">
+        Treasury is project fuel — not personal profit. Used for development, marketing,
+        community rewards and future growth.
+      </p>
+      <ul>
+        <li><b>Team Wallet:</b> operations + building</li>
+        <li><b>Treasury:</b> community guided growth</li>
+        <li><b>Rule:</b> announce only what we can deliver</li>
+      </ul>
+    </section>
 
-<div class="status">
+    <!-- ROADMAP -->
+    <section id="roadmap" class="card" style="margin-top:18px;">
+      <div class="sectionTitle">ROADMAP</div>
+      <ul>
+        <li>Phase 1 — Launch + socials + first holders</li>
+        <li>Phase 2 — Community growth + meme expansion</li>
+        <li>Phase 3 — Experiments + collaborations</li>
+        <li>Phase 4 — Ecosystem development (only if earned)</li>
+      </ul>
+      <p class="p" style="margin-top:12px; color:rgba(255,255,255,.55); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;">
+        We move phase by phase — no rushing, no bullshit.
+      </p>
+    </section>
 
-<h2>PIXEL STATUS</h2>
+    <!-- LINKS -->
+    <section id="links" class="card" style="margin-top:18px;">
+      <div class="sectionTitle">LINKS</div>
+      <p class="p">Official project links. Always verify before interacting.</p>
 
-<div class="statusRow">
-<span>Location</span>
-<span>Earth</span>
-</div>
+      <div class="linksGrid">
+        <div class="linkItem">
+          <div class="k">Telegram</div>
+          <a href="https://t.me/piXel1Community" target="_blank" rel="noopener noreferrer">t.me/piXel1Community</a>
+        </div>
 
-<div class="statusRow">
-<span>Mood</span>
-<span>Curious</span>
-</div>
+        <div class="linkItem">
+          <div class="k">X</div>
+          <a href="https://x.com/_pi_X_eL_" target="_blank" rel="noopener noreferrer">x.com/_pi_X_eL_</a>
+        </div>
 
-<div class="statusRow">
-<span>Mission</span>
-<span>Find community</span>
-</div>
+        <div class="linkItem">
+          <div class="k">Contract</div>
+          <span style="color:rgba(255,255,255,.65); font-weight:800;">coming</span>
+        </div>
+      </div>
 
-<div class="progress">
-<div class="bar"></div>
-</div>
+      <div class="footNote">
+        TIP: If the character shows a white box, your image has no transparency.
+        Export the character as PNG with transparent background (recommended name: <b>charakter.png</b>),
+        then replace the image.
+      </div>
+    </section>
+  </main>
 
-<p style="color:#8c97a9;margin-top:10px;">
-Signal: active • Scan: running • Mode: community
-</p>
+  <script>
+    // Simple active nav highlighting on scroll
+    const links = Array.from(document.querySelectorAll(".nav a"));
+    const sections = links
+      .map(a => document.querySelector(a.getAttribute("href")))
+      .filter(Boolean);
 
-</div>
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+    };
 
-<div class="character">
+    const obs = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if(!visible) return;
+      setActive(visible.target.id || "top");
+    }, { rootMargin: "-35% 0px -55% 0px", threshold: [0.08, 0.12, 0.18, 0.25] });
 
-<img src="charakter.png">
-
-</div>
-
-<div class="section">
-
-<h2>STORY</h2>
-
-<p>
-Pixel didn’t land here with a masterplan — he landed here with questions. No hype. No fake promises. Just curiosity and a mission to build something with real people.
-</p>
-
-<ul>
-<li><b>New world:</b> Pixel learns what crypto even is.</li>
-<li><b>New crew:</b> the community shapes the vibe.</li>
-<li><b>New route:</b> we decide the next steps together.</li>
-</ul>
-
-</div>
-
-<div class="section">
-
-<h2>COMMUNITY TREASURY</h2>
-
-<p>
-Treasury is project fuel — not personal profit. Used for development, marketing, community rewards and future growth.
-</p>
-
-<ul>
-<li><b>Team Wallet:</b> operations + building</li>
-<li><b>Treasury:</b> community guided growth</li>
-<li><b>Rule:</b> announce only what we can deliver</li>
-</ul>
-
-</div>
-
-<div class="section">
-
-<h2>ROADMAP</h2>
-
-<ul>
-<li>Phase 1 — Launch + socials</li>
-<li>Phase 2 — Community growth</li>
-<li>Phase 3 — Meme expansion</li>
-<li>Phase 4 — Ecosystem development</li>
-</ul>
-
-</div>
-
-</div>
-
+    sections.forEach(s => obs.observe(s));
+  </script>
 </body>
 </html>
