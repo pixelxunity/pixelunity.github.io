@@ -1,68 +1,374 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<title>PIXEL</title>
-<style>
-body{
-background:#000;
-color:white;
-font-family:Arial;
-text-align:center;
-margin:0;
-}
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="PIXEL — a pixel-born community. Minimal. Fast. Together." />
+  <title>PIXEL</title>
 
-.header{
-padding:120px 20px;
-}
-
-h1{
-font-size:60px;
-letter-spacing:10px;
-}
-
-p{
-font-size:20px;
-color:#aaa;
-}
-
-.buttons{
-margin-top:40px;
-}
-
-button{
-padding:15px 30px;
-margin:10px;
-border:none;
-background:white;
-color:black;
-font-size:16px;
-cursor:pointer;
-}
-
-.section{
-padding:80px 20px;
-}
-
-.footer{
-padding:40px;
-color:#666;
-font-size:14px;
-}
-</style>
+  <style>
+    :root{
+      --bg:#050507;
+      --panel:#0b0b10;
+      --text:#ffffff;
+      --muted:#a3a3b2;
+      --line:#1b1b24;
+      --glow: 0 0 18px rgba(255,255,255,.08);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(800px 500px at 50% -10%, rgba(255,255,255,.08), transparent 60%),
+                  radial-gradient(900px 600px at 10% 30%, rgba(255,255,255,.06), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      line-height:1.5;
+      overflow-x:hidden;
+    }
+    .grid{
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity:.18;
+      pointer-events:none;
+      mask-image: radial-gradient(closest-side at 50% 20%, rgba(0,0,0,1), rgba(0,0,0,0));
+    }
+    .wrap{
+      max-width:980px;
+      margin:0 auto;
+      padding:28px 18px 60px;
+      position:relative;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:10px 8px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      color:var(--text);
+    }
+    .logo{
+      width:34px; height:34px;
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.06));
+      border:1px solid var(--line);
+      box-shadow: var(--glow);
+      display:grid; place-items:center;
+      font-weight:800;
+      letter-spacing:.06em;
+    }
+    .brand span{
+      font-weight:800;
+      letter-spacing:.22em;
+      font-size:14px;
+      opacity:.95;
+    }
+    .nav{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:13px;
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    .hero{
+      margin-top:18px;
+      padding:54px 18px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border-radius: var(--radius);
+      box-shadow: var(--glow);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(520px 220px at 50% 20%, rgba(255,255,255,.12), transparent 60%);
+      pointer-events:none;
+    }
+    .kicker{
+      color:var(--muted);
+      font-size:12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      margin:0 0 10px;
+    }
+    h1{
+      margin:0;
+      font-size: clamp(38px, 6vw, 64px);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+    .tagline{
+      max-width: 60ch;
+      margin:14px auto 0;
+      color:var(--muted);
+      font-size: clamp(15px, 2.4vw, 18px);
+    }
+    .cta{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:28px;
+      position:relative;
+      z-index:2;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      color:var(--text);
+      padding:12px 16px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:14px;
+      letter-spacing:.04em;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      box-shadow: var(--glow);
+    }
+    .btn:hover{ background: rgba(255,255,255,.08); }
+    .btn.primary{
+      background:#fff;
+      color:#000;
+      border-color:#fff;
+      box-shadow: 0 10px 28px rgba(255,255,255,.10);
+    }
+    .btn.primary:hover{ opacity:.92; }
+    .pillrow{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top:18px;
+      position:relative;
+      z-index:2;
+    }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius: 999px;
+      font-size:12px;
+      letter-spacing:.02em;
+    }
+    .sections{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media(min-width: 860px){
+      .sections{ grid-template-columns: 1.2fr .8fr; }
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      border-radius: var(--radius);
+      padding:20px;
+      box-shadow: var(--glow);
+    }
+    .card h2{
+      margin:0 0 8px;
+      font-size:16px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .card p{ margin:0; color:var(--muted); }
+    .list{
+      margin:12px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .list li{
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      color:var(--muted);
+    }
+    .list b{ color:var(--text); }
+    .links{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+    .link{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding:12px;
+      background: rgba(255,255,255,.02);
+      color:var(--text);
+    }
+    .link span{ color:var(--muted); font-size:12px; }
+    .link:hover{ background: rgba(255,255,255,.05); }
+    .footer{
+      margin-top:18px;
+      padding:18px 6px 0;
+      color:var(--muted);
+      font-size:12px;
+      text-align:center;
+    }
+    .footer a{ color:var(--muted); }
+    .footer a:hover{ color:var(--text); }
+    .coin{
+      width:22px; height:22px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.86);
+      border:1px solid rgba(255,255,255,.65);
+      display:grid;
+      place-items:center;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.02em;
+      color:#fff;
+    }
+  </style>
 </head>
 
 <body>
+  <div class="grid" aria-hidden="true"></div>
 
-<div class="header">
-<h1>PIXEL</h1>
-<p>A pixel-born community.</p>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="#top" aria-label="PIXEL home">
+        <div class="logo">P</div>
+        <span>PIXEL</span>
+      </a>
 
-<div class="buttons">
-<button>Join Telegram</button>
-<button>Follow on X</button>
-</div>
-</div>
+      <div class="nav">
+        <a href="#about">About</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#links">Links</a>
+      </div>
+    </div>
 
-<div class="section">
-<h2>
+    <section class="hero" id="top">
+      <p class="kicker">Minimal • Meme • Community</p>
+      <h1>PIXEL</h1>
+      <p class="tagline">
+        A pixel-born community project. Clean branding, consistent drops, transparent updates.
+        No noise — just momentum.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" href="https://t.me/piXel1Community" target="_blank" rel="noreferrer">
+          <span class="coin">C</span> Join Telegram
+        </a>
+        <a class="btn" href="https://x.com/_pi_X_eL_" target="_blank" rel="noreferrer">
+          Follow on X
+        </a>
+        <a class="btn" href="#links">
+          View Links
+        </a>
+      </div>
+
+      <div class="pillrow">
+        <div class="pill">Community-first</div>
+        <div class="pill">Minimal design</div>
+        <div class="pill">Daily content</div>
+        <div class="pill">Transparent growth</div>
+      </div>
+    </section>
+
+    <div class="sections">
+      <section class="card" id="about">
+        <h2>About</h2>
+        <p>
+          PIXEL is built around one simple idea: strong community + clean execution.
+          We keep it minimal, move fast, and grow through consistent content and clear communication.
+        </p>
+
+        <ul class="list">
+          <li><b>Brand:</b> consistent visuals, same vibe, recognizable everywhere.</li>
+          <li><b>Community:</b> Telegram first, everyone is part of the story.</li>
+          <li><b>Execution:</b> updates over hype. Step by step.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="roadmap">
+        <h2>Roadmap</h2>
+        <ul class="list">
+          <li><b>Phase 1:</b> Launch socials • core memes • first community push</li>
+          <li><b>Phase 2:</b> Stickers / templates • collabs • daily posts rhythm</li>
+          <li><b>Phase 3:</b> Expand narrative • tools/utility (only if real) • scale</li>
+        </ul>
+
+        <p style="margin-top:12px;">
+          <span style="color:#fff;font-weight:700;">Rule:</span>
+          We only announce what we can deliver.
+        </p>
+      </section>
+    </div>
+
+    <section class="card" id="links" style="margin-top:14px;">
+      <h2>Links</h2>
+      <p>Everything important in one place.</p>
+
+      <div class="links">
+        <a class="link" href="https://t.me/piXel1Community" target="_blank" rel="noreferrer">
+          Telegram <span>t.me/piXel1Community</span>
+        </a>
+        <a class="link" href="https://x.com/_pi_X_eL_" target="_blank" rel="noreferrer">
+          X <span>x.com/_pi_X_eL_</span>
+        </a>
+        <a class="link" href="mailto:pixel.unity@proton.me">
+          Email <span>pixel.unity@proton.me</span>
+        </a>
+        <a class="link" href="#" onclick="alert('Add your Pump.fun / DEX link here'); return false;">
+          Pump.fun / Chart <span>(add link)</span>
+        </a>
+        <a class="link" href="#" onclick="alert('Add your Discord invite here'); return false;">
+          Discord <span>(add invite)</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div>© <span id="y"></span> PIXEL • Meme project • Not financial advice.</div>
+      <div style="margin-top:8px;">Hosted free on GitHub Pages.</div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
