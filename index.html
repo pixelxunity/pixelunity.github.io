@@ -120,22 +120,11 @@
     .wrap{display:flex; flex-direction:column; gap:18px;}
     .gridTop{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr;
       gap:12px;
       align-items:stretch; /* fixes desktop "gap" feeling */
     }
-      .features{
-        width:100%;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-}
-      
-      @media (max-width:600px){
-  .features{
-    grid-template-columns:1fr;
-  }
-}
+
     @media (min-width: 920px){
       .gridTop{ grid-template-columns: 1.05fr .95fr; }
     }
