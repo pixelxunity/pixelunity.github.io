@@ -382,16 +382,24 @@ margin-top:20px;
     }
     @media (max-width: 920px){
   .chips{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    justify-items:center;
-    align-items:stretch;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.chip{
+  width:100%;
+  text-align:center;
+}
+
+@media (max-width:600px){
+  .chips{
+    grid-template-columns:1fr;
   }
+}
 
   .chip{
     width:100%;
-    max-width:260px;
     text-align:center;
     white-space:normal;
     padding:12px 14px;
