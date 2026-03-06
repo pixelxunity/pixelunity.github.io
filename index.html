@@ -877,9 +877,9 @@ Pixel â€” fresh from cruising the cosmos. Crypto? Blockchain? Never heard of itâ
       tick++;
 
       // Fake but believable pulses
-      const tg = rnd(1, 3);
-      const xs = rnd(1, 3);
-      const wb = rnd(0, 2);
+      const tg = rnd(1, 4);
+      const xs = rnd(1, 4);
+      const wb = rnd(0, 3);
 
       tgPulse.textContent = `+${tg}`;
       xPulse.textContent  = `+${xs}`;
@@ -896,9 +896,9 @@ Pixel â€” fresh from cruising the cosmos. Crypto? Blockchain? Never heard of itâ
 }
       
       // Make blips react
-      blipTG.classList.toggle("pulse", tg >= 4);
-      blipX.classList.toggle("pulse", xs >= 4);
-      blipWEB.classList.toggle("pulse", wb >= 2);
+      blipTG.classList.toggle("pulse", tg >= 2);
+      blipX.classList.toggle("pulse", xs >= 2);
+      blipWEB.classList.toggle("pulse", wb >= 1);
 
       // Jitter movement (subtle)
       jitterBlip(blipTG, 22, 62, 10);
@@ -906,20 +906,9 @@ Pixel â€” fresh from cruising the cosmos. Crypto? Blockchain? Never heard of itâ
       jitterBlip(blipWEB, 48, 56, 8);
 
       // Sometimes dim web activity to show "0"
-      blipWEB.classList.toggle("dim", wb === 0);
-      const total = tg + xs + wb;
+     
 
-if(total > 6){
-  radarLabel.textContent = "HOT SIGNAL";
-}
-else if(total > 3){
-  radarLabel.textContent = "ACTIVE";
-}
-else{
-  radarLabel.textContent = "SCANNING";
-}
-
-    }, 8000);
+    }, 4000);
 
   </script>
    <div style="margin-top:40px;text-align:center;color:rgba(255,255,255,0.35);font-size:12px;line-height:1.6">
