@@ -461,25 +461,24 @@ border:none;
 position:absolute;
 inset:0;
 border-radius:50%;
-
 background:conic-gradient(
 from 0deg,
-rgba(120,255,220,0) 0deg,
-rgba(120,255,220,0.04) 10deg,
-rgba(120,255,220,0.12) 18deg,
-rgba(120,255,220,0.35) 26deg,
-rgba(120,255,220,0.18) 34deg,
-rgba(120,255,220,0.06) 46deg,
-rgba(120,255,220,0.02) 60deg,
-transparent 90deg
+rgba(120,255,220,0.00) 0deg,
+rgba(120,255,220,0.015) 8deg,
+rgba(120,255,220,0.05) 18deg,
+rgba(120,255,220,0.12) 28deg,
+rgba(120,255,220,0.22) 36deg,
+rgba(120,255,220,0.12) 48deg,
+rgba(120,255,220,0.04) 62deg,
+rgba(120,255,220,0.01) 78deg,
+transparent 100deg
 );
-      filter: blur(1px);
-      opacity:.9
-        
+filter: blur(2px);
+opacity:.75;
 transform-origin:50% 50%;
-animation: sweep 14s linear infinite;
-      z-index:2;
-      pointer-events:none;
+animation:sweep 14s linear infinite;
+z-index:2;
+pointer-events:none;
 }
     }
     @keyframes sweep{
