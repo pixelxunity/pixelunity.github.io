@@ -603,8 +603,8 @@ pointer-events:none;
       
       opacity:0;
       transition:
-        opacity 0.25s ease,
-        transform 0.25s ease,
+        opacity 0.15s ease,
+        transform 0.15s ease,
         left 3s linear,
         top 3s linear;
     }
@@ -1109,24 +1109,6 @@ signal scan in progress
       jitterBlip(blipX, 78, 38, 12);
       jitterBlip(blipWEB, 48, 56, 8);
       
-      if (!blipTG.style.opacity) blipTG.style.opacity = 0;
-      if (!blipX.style.opacity) blipX.style.opacity = 0;
-      if (!blipWEB.style.opacity) blipWEB.style.opacity = 0;
-
-      if (Math.random() > 0.75) {
-      blipTG.style.opacity = 1;
-      setTimeout(() => { blipTG.style.opacity = 0; }, 900);
-      }
-
-      if (Math.random() > 0.78) {
-      blipX.style.opacity = 1;
-      setTimeout(() => { blipX.style.opacity = 0; }, 900);
-      }
-
-      if (Math.random() > 0.82) {
-      blipWEB.style.opacity = 1;
-      setTimeout(() => { blipWEB.style.opacity = 0; }, 900);
-      }
 
 
       // Sometimes dim web activity to show "0"
