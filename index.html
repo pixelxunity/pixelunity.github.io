@@ -243,6 +243,18 @@ opacity:.85;
       font-size:15px;
     }
     .lead b{ color:var(--text) }
+    .dots::after{
+  content:"";
+  animation:loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots{
+  0%{ content:""; }
+  25%{ content:"."; }
+  50%{ content:".."; }
+  75%{ content:"..."; }
+  100%{ content:""; }
+}
 
     .btns{
 display:grid;
@@ -313,21 +325,22 @@ margin-top:20px;
 
     /* Chips (fix wasted space) */
     .chips{
-      margin-top:12px;
+      margin-top:16px;
       display:flex;
-      gap:8px;
+      gap:10px;
       flex-wrap:wrap;
-      align-items:flex-start;
-      align-content:flex-start;
+      justify-content:center;
+      align-items:center;
+     
     }
     .chip{
-      padding:8px 12px;
+      padding:8px 14px;
       border-radius:999px;
       border:1px solid var(--stroke);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.70);
-      font-weight:800;
-      font-size:13px;
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.82);
+      font-weight:700;
+      font-size:14px;
       white-space:nowrap;
     }
     @media (max-width: 920px){
@@ -889,7 +902,7 @@ signal scan in progress...
 </div>
 </section>
 
-      <h2>JOIN THE SIGNAL</h2>
+      <h2 style="text-align:center;">JOIN THE SIGNAL</h2>
 
 <div class="btns" style="margin-top:12px">
 
