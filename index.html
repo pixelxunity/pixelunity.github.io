@@ -412,13 +412,15 @@ inset:0;
 border-radius:50%;
 
 background:conic-gradient(
-rgba(120,255,220,0.55) 0deg,
-rgba(120,255,220,0.35) 18deg,
-rgba(120,255,220,0.14) 45deg,
-transparent 120deg
+rgba(120,255,220,0.45) 0deg,
+rgba(120,255,220,0.18) 18deg,
+rgba(120,255,220,0.06) 45deg,
+transparent 90deg
 );
-
+transform-origin:50% 50%;
 animation: sweep 14s linear infinite;
+      z-index:2;
+      pointer-events:none;
 }
     }
     @keyframes sweep{
@@ -511,6 +513,17 @@ transform: translate(-50%,-50%) scale(1);
       gap:10px;
       margin-top:12px;
     }
+    @keyframes sweep{
+0%{ transform: rotate(0deg);}
+100%{ transform: rotate(360deg);}
+}
+    @keyframes radarScan{
+  0%{ transform: translateY(-140%); opacity:0; }
+  10%{ opacity:.55; }
+  35%{ transform: translateY(260%); opacity:.55; }
+  45%{ opacity:0; }
+  100%{ transform: translateY(260%); opacity:0; }
+}
     .stat{
       display:flex;
       justify-content:space-between;
