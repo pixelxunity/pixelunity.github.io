@@ -885,8 +885,14 @@ Pixel â€” fresh from cruising the cosmos. Crypto? Blockchain? Never heard of itâ
 
       // Activity states
       const total = tg + xs + wb;
-      radarLabel.textContent = total >= 6 ? "HOT" : (total >= 3 ? "ACTIVE" : "SCANNING");
-
+      if (total >= 7){
+  radarLabel.textContent = "HOT SIGNAL";
+} else if (total >= 4){
+  radarLabel.textContent = "ACTIVE";
+} else {
+  radarLabel.textContent = "SCANNING";
+}
+      
       // Make blips react
       blipTG.classList.toggle("pulse", tg >= 4);
       blipX.classList.toggle("pulse", xs >= 4);
