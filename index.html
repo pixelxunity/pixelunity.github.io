@@ -633,23 +633,40 @@ transform:translateY(-1px);
     }
     @media (max-width: 600px){
 
-.signalButton{
-padding:8px 14px;
-max-width:180px;
-}
+  .btn{
+    width:64%;
+    max-width:260px;
+    min-width:0;
+    margin:0 auto;
+    font-size:14px;
+    padding:10px 16px;
+  }
 
-.btn{
-font-size:14px;
-width:60%;
-max-width:240px;
-}
+  .btnFull{
+    width:64%;
+    max-width:260px;
+  }
 
-.joinSignal{
-gap:12px;
-margin-top:14px;
-}
+  .btnPrimary{
+    background:linear-gradient(90deg,#6fbca9,#6d86c8) !important;
+    color:#081f34 !important;
+    box-shadow:0 6px 12px rgba(90,140,220,0.10) !important;
+  }
+
+  .signalButton{
+    max-width:180px;
+    padding:8px 14px;
+    animation:none !important;
+    box-shadow:none !important;
+  }
+
+  .joinSignal{
+    gap:12px;
+    margin-top:14px;
+  }
 
 }
+    
   </style>
 </head>
 <body>
