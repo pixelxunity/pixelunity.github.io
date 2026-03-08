@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Mission Control</title>
+<style>
+
+body{
+background:#050816;
+color:white;
+font-family:Arial;
+text-align:center;
+padding:60px;
+}
+
+button{
+padding:14px 24px;
+font-size:18px;
+background:#4de2ff;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+#modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000cc;
+align-items:center;
+justify-content:center;
+}
+
+.box{
+background:#08111f;
+padding:30px;
+border-radius:10px;
+width:320px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>PIXEL MISSION CONTROL</h1>
+
+<p>Restricted Access</p>
+
+<button onclick="openMission()">Enter Mission Control</button>
+
+<div id="modal">
+
+<div class="box">
+
+<h2>Access Code</h2>
+
+<input type="password" id="code">
+
+<button onclick="checkCode()">Enter</button>
+
+<p id="result"></p>
+
+</div>
+
+</div>
+
+<script>
+
+function openMission(){
+document.getElementById("modal").style.display="flex"
+}
+
+function checkCode(){
+
+let code=document.getElementById("code").value
+
+if(code=="PIXEL-ACCESS"){
+
+document.getElementById("result").innerText="Access granted. Mission Control coming soon."
+
+}else{
+
+document.getElementById("result").innerText="Access denied"
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
